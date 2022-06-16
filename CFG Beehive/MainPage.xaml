@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CFG_Beehive.MainPage">
+
+    <StackLayout BackgroundColor="Orange">
+        <Frame BackgroundColor="DarkOrange" Padding="24" CornerRadius="0">
+            <Label Text="CFG Beehive" HorizontalTextAlignment="Center" TextColor="Black" FontSize="36" FontFamily="Pricedown"/>
+        </Frame>
+        <Label Text="Instrukcja użytkowania" FontSize="Title" Padding="30,10,30,10" FontAttributes="Bold"/>
+        <Label Text="Włóż telefon z włączoną aplikacją i już! &#x0a;Wyślemy dane do serwera i otrzymasz powiadomienie o prawidłowym połączeniu. Będziesz mógł sprawdzić lokalizację swojego ula na stronie www.host.com." FontSize="16" Padding="30,0,30,0"/>
+        <Label Text="                                    Stworzone przez członków projektu Code For Green, uczniów VIII LO Poznań" FontSize="12" Padding="30,24,30,0" HorizontalTextAlignment="End"/>
+    </StackLayout>
+
+</ContentPage>
