@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Android;
+using Android.Content.PM;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -11,20 +13,30 @@ namespace CFG_Beehive
         const string host = "www.google.com";
         const string uri = "/";
         //Częstotliwość wysyłania danych: h, m, s
-        TimeSpan timespan = new TimeSpan(0, 0, 10);
+        TimeSpan timespan = new TimeSpan(0, 0, 5);
+        bool z;
         public MainPage()
         {
+            //    string text = "1";
+            //  status.Text = text
             InitializeComponent();
-
+             
+            HttpResponseMessage http = null;
             Device.StartTimer(timespan, () =>
             {
-                SendLocalization().ContinueWith((task) =>
-                {
-                    HttpResponseMessage http = task.Result;
-                    Environment.Exit(9);
-                    DisplayAlert("Status", "Connection return code: " + http.ReasonPhrase, "OK");
-                },
-                TaskScheduler.FromCurrentSynchronizationContext());
+                SendLocalization().ContinueWith((task) => {
+                    http = task.Result;
+                   // task.Wait();
+                });//.ContinueWith((task) =>
+                   //{
+                   //    http = task.Result;
+                   //    text = http.StatusCode.ToString();
+                   //},
+                   //TaskScheduler.FromCurrentSynchronizationContext());
+                if (z)
+                    DisplayAlert("Błąd", "Aplikacja potrzebuje zgody na lokalizację.", "Rozumiem");
+                if (http != null)
+                status.Text = http.StatusCode.ToString();
                 return true;
             });
         }
@@ -33,8 +45,16 @@ namespace CFG_Beehive
         //metoda zwraca HttpResponseMessage
         async Task<HttpResponseMessage> SendLocalization()
         {
-            Location location = await Geolocation.GetLocationAsync();
-            HttpClient client = new HttpClient();
+
+            //  var status = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            z = status != PermissionStatus.Granted;
+            Location location = null;
+                location = await Geolocation.GetLocationAsync();
+            if (location == null)
+                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+            
+                HttpClient client = new HttpClient();
             client.Timeout = timespan;
             HttpResponseMessage httpResponse;
             StringContent stringContent = new StringContent(
