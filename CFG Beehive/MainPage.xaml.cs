@@ -1,4 +1,5 @@
-﻿
+﻿/*TODO:
+ Strony podrzędne Management i Hive Page.*/
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
