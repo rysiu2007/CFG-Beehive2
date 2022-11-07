@@ -13,7 +13,7 @@ namespace CFG_Beehive
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        string login, password,host = "", api = "/api/auth/login";
+        string login, password,host = "http://ec2-52-28-189-5.eu-central-1.compute.amazonaws.com", api = "/api/auth/login";
         public LoginPage()
         {
             InitializeComponent();
@@ -27,12 +27,25 @@ namespace CFG_Beehive
             client.BaseAddress = new Uri(host+api);
             login = Login.Text;
             password = Password.Text;
+            HttpResponseMessage httpResponse = null;
             StringContent httpContent = new StringContent($"{{ \"username\": \"{login}\", \"password\": \"{password}\"}}");
-            HttpResponseMessage httpResponse = await client.PostAsync(host+api,httpContent);
-            if(httpResponse.StatusCode == System.Net.HttpStatusCode.OK)
+            try
             {
-                Navigation.PopAsync(true);
+                httpResponse = await client.PostAsync(new Uri(host + api), httpContent);
+                if (httpResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Navigation.PopAsync(true);
+                }
+                else
+                {
+                    Error.Text = "Nieprawidłowa nazwa użytkownika lub hasło.";
+                }
             }
+            catch (Exception ex)
+            {
+                Error.Text = "There was an exception: "+ex.Message;
+            }
+          
         }
     }
 }
