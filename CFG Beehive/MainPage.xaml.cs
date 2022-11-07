@@ -1,15 +1,14 @@
-﻿using Android;
-using Android.Content.PM;
+﻿
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-
 namespace CFG_Beehive
 {
     public partial class MainPage : ContentPage
     {
+        String s = "";
         const string host = "www.google.com";
         const string uri = "/";
         //Częstotliwość wysyłania danych: h, m, s
@@ -20,7 +19,8 @@ namespace CFG_Beehive
             //    string text = "1";
             //  status.Text = text
             InitializeComponent();
-             
+            NavigationPage.SetHasNavigationBar(this, false);
+            Navigation.PushAsync(new LoginPage());
             HttpResponseMessage http = null;
             Device.StartTimer(timespan, () =>
             {
@@ -28,15 +28,13 @@ namespace CFG_Beehive
                     http = task.Result;
                    // task.Wait();
                 });//.ContinueWith((task) =>
-                   //{
-                   //    http = task.Result;
-                   //    text = http.StatusCode.ToString();
-                   //},
+                   
+                   //    http =de.
                    //TaskScheduler.FromCurrentSynchronizationContext());
                 if (z)
                     DisplayAlert("Błąd", "Aplikacja potrzebuje zgody na lokalizację.", "Rozumiem");
                 if (http != null)
-                status.Text = http.StatusCode.ToString();
+                status.Text = s;
                 return true;
             });
         }
@@ -63,6 +61,11 @@ namespace CFG_Beehive
                 $"\"Latitude\":\"{location.Latitude}\"," +
                 $"\"DateTime\":\"{location.Timestamp.UtcDateTime}\"" +
                 $"}}");
+            s = $"{{" +
+                $"\"Longitude\":\"{location.Longitude}\"," +
+                $"\"Latitude\":\"{location.Latitude}\"," +
+                $"\"DateTime\":\"{location.Timestamp.UtcDateTime}\"" +
+                $"}}"; 
             try
             {
                 httpResponse = await client.PostAsync(host + uri, stringContent);
@@ -70,6 +73,7 @@ namespace CFG_Beehive
             catch
             {
                 httpResponse = new HttpResponseMessage(System.Net.HttpStatusCode.ExpectationFailed);
+                httpResponse.Content = stringContent;
             }
             return httpResponse;
 
