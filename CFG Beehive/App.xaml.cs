@@ -2,6 +2,7 @@
 
 namespace CFG_Beehive
 {
+
     public partial class App : Application
     {
         public App()

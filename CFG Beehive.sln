@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFG Beehive.Android", "CFG Beehive.Android\CFG Beehive.Android.csproj", "{0AAF13EA-4099-4823-A536-24372A44055E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFG Beehive", "CFG Beehive\CFG Beehive.csproj", "{11407279-4334-479B-B8DF-A21E3BDDF719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CFG Beehive", "CFG Beehive\CFG Beehive.csproj", "{11407279-4334-479B-B8DF-A21E3BDDF719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

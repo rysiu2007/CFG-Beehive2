@@ -1,10 +1,9 @@
 ﻿/*TODO:
  Strony podrzędne Management i Hive Page.*/
+
 using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
+
 namespace CFG_Beehive
 {
     public partial class MainPage : ContentPage
@@ -21,7 +20,16 @@ namespace CFG_Beehive
             //  status.Text = text
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+            Logout();
+        }
+        void Logout()
+        {
             Navigation.PushAsync(new LoginPage());
+        }
+
+        private void Menu_Clicked(object sender, EventArgs e)
+        {
+            Logout();
         }
     }
 }
